@@ -1,0 +1,37 @@
+/* custom-scrollbar.css */
+.custom-scrollbar-container {
+  scrollbar-width: thin;
+  scrollbar-color: #333 white;
+}
+
+/* Define the scrollbar thumb */
+.custom-scrollbar-container::-webkit-scrollbar-thumb {
+  background-color: #3C4B64;
+  /* Set the color of the thumb */
+}
+
+/* Define the scrollbar track */
+.custom-scrollbar-container::-webkit-scrollbar-track {
+  background-color: #3C4B64;
+  /* Set the background color of the scrollbar track */
+}
+
+/* Define the scrollbar corner */
+.custom-scrollbar-container::-webkit-scrollbar-corner {
+  background-color: #3C4B64;
+  /* Set the background color of the scrollbar corner */
+}
+
+/* Define the scrollbar track */
+::-webkit-scrollbar {
+  width: 5px;
+  /* Set the width of the scrollbar */
+  background-color: #3C4B64;
+  /* Set the background color of the scrollbar */
+}
+
+/* Define the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #3C4B64;
+  /* Set the color of the thumb */
+}
