@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { CBadge } from '@coreui/react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export const AppSidebarNav = ({ items }) => {
   const user = useSelector((state) => state.user.user)
@@ -24,7 +24,6 @@ export const AppSidebarNav = ({ items }) => {
   }
 
   const userRole = user.role ? user.role : 'Retailer' // [MasterAdmin, Admin, Master Distributor, Distributor, Retailer]
-  // console.log('userRole: ', userRole)
 
   // Filter the navigation items based on the user type
   const filteredNav = items.filter((item) => {
@@ -43,25 +42,6 @@ export const AppSidebarNav = ({ items }) => {
     return true // Include items that don't have specific type restrictions
   })
 
-  // Map the filtered navigation items to render
-  // const renderedNav = filteredNav.map((item, index) => {
-  //   const { component, name, badge, icon, ...rest } = item
-  //   const Component = component
-  //   return (
-  //     <Component
-  //       {...(rest.to &&
-  //         !rest.items && {
-  //           component: NavLink,
-  //         })}
-  //       key={index}
-  //       toggler={navLink(name, icon)}
-  //       {...rest}
-  //     >
-  //       {navLink(name, icon, badge)}
-  //     </Component>
-  //   )
-  // })
-
   const navItem = (item, index) => {
     const { component, name, badge, icon, ...rest } = item
     const Component = component
@@ -79,29 +59,11 @@ export const AppSidebarNav = ({ items }) => {
     )
   }
 
-  // const renderNavGroup = filteredNav.map((item, index) => {
-  //   const { component, name, icon, to, ...rest } = item
-  //   const Component = component
-  //   return (
-  //     console.log(<Component
-  //       idx={String(index)}
-  //       key={index}
-  //       toggler={navLink(name, icon)}
-  //       visible={location.pathname.startsWith(to)}
-  //       {...rest}
-  //     >
-  //       {item.items?.map((item, index) =>
-  //         item.items ? renderNavGroup(item, index) : navItem(item, index),
-  //       )}
-  //     </Component>)
-
-  //   )
-  // })
   const renderNavGroup = (item, index) => {
-    const { component, name, icon, to, ...rest } = item;
-    const Component = component;
-    const isActive = location.pathname.startsWith(to);
-  
+    const { component, name, icon, to, ...rest } = item
+    const Component = component
+    const isActive = location.pathname.startsWith(to)
+
     return (
       <Component
         idx={String(index)}
@@ -110,27 +72,27 @@ export const AppSidebarNav = ({ items }) => {
         visible={isActive}
         {...rest}
       >
-        {item.items?.map((nestedItem, nestedIndex) =>
-          nestedItem.items
-            ? renderNavGroup(nestedItem, nestedIndex) // Recursively render nested groups
-            : navItem(nestedItem, nestedIndex) // Render nested items
+        {item.items?.map(
+          (nestedItem, nestedIndex) =>
+            nestedItem.items
+              ? renderNavGroup(nestedItem, nestedIndex) // Recursively render nested groups
+              : navItem(nestedItem, nestedIndex), // Render nested items
         )}
       </Component>
-    );
-  };
-  
+    )
+  }
+
   // ...
-  
+
   const renderedNav = filteredNav.map((item, index) => {
     if (item.items) {
-      return renderNavGroup(item, index);
+      return renderNavGroup(item, index)
     } else {
-      return navItem(item, index);
+      return navItem(item, index)
     }
-  });
-  
+  })
 
-  return <React.Fragment>{items && items.items && renderNavGroup || renderedNav }</React.Fragment>
+  return <React.Fragment>{(items && items.items && renderNavGroup) || renderedNav}</React.Fragment>
 }
 
 AppSidebarNav.propTypes = {

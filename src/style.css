@@ -1,17 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-*{
+
+* {
     font-family: 'Roboto', sans-serif;
 }
-.anim{
+
+.anim {
     animation: marquee 10s linear infinite;
 }
 
+
 @keyframes marquee {
-    0%{
+    0% {
         transform: translateX(100%);
     }
-    100%{
+
+    100% {
         transform: translateX(-100%);
     }
-    
+
 }

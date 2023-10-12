@@ -17,9 +17,12 @@ const Index = () => {
                   <thead>
                     <tr>
                       <th>Sn.</th>
-                      <th>Partner Name</th>
+                      <th>Name</th>
                       <th>Role</th>
-                      <th>Commission</th>
+                      <th>Type</th>
+                      <th>Debit+</th>
+                      <th>Credit-</th>
+                      <th>Total Amount</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -27,25 +30,28 @@ const Index = () => {
                       <td>1</td>
                       <td>Partner 1</td>
                       <td>Master Admin</td>
+                      <td>Commssion</td>
                       <td>1000</td>
+                      <td>0</td>
+                      <td>10000</td>
                     </tr>
                     <tr>
                       <td>2</td>
                       <td>Partner 2</td>
-                      <td>Master Distributor</td>
+                      <td>Admin</td>
+                      <td>Transfered</td>
+                      <td>0</td>
                       <td>1000</td>
+                      <td>9000</td>
                     </tr>
                     <tr>
                       <td>3</td>
-                      <td>Partner 3</td>
-                      <td>Distributor</td>
-                      <td>1000</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Partner 4</td>
-                      <td>Retailer</td>
-                      <td>1000</td>
+                      <td>Self Name</td>
+                      <td>Admin</td>
+                      <td>Withdraw</td>
+                      <td>0</td>
+                      <td>9000</td>
+                      <td>0</td>
                     </tr>
                   </tbody>
                 </Table>

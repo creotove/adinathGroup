@@ -23,11 +23,12 @@ const MasterDistributorDashboard  = React.lazy(() => import('./views/master-dist
 const AdminDashboard  = React.lazy(() => import('./views/admin-dashboard/Index'))
 const MasterAdminDashboard  = React.lazy(() => import('./views/master-admin-dashboard/Index'))
 
+const Profile = React.lazy(() => import('./views/profile/Index'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/user', name: 'User', element: Allpartners, exact: true },
-  // { path: '/pending', name: 'Pending', element: Pending, exact: true },
 
   { path: '/set-price', name: 'Set Price', element: SetPrice, exact: true },
   { path: '/all-partners', name: 'Partners', element: Allpartners, exact: true },
@@ -52,9 +53,9 @@ const routes = [
   { path: '/admin-dashboard', name: 'Not Found', element: AdminDashboard ,exact: true },
   { path: '/master-admin-dashboard', name: 'Not Found', element: MasterAdminDashboard ,exact: true },
 
+{ path: '/profile', name: 'Profile', element: Profile ,exact: true },
 
-
-
+{ path: '*', name: 'Not Found', element: <h1>Not Found</h1>}
 
 
 

@@ -42,7 +42,10 @@ const Index = () => {
         ifscCode,
         bankName,
       }
-      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/setAccountDetails', formData)
+      const res = await axios.post(
+        'https://adinathserver.onrender.com/api/v1/user/setAccountDetails',
+        formData,
+      )
       if (res.data.success) {
         message.success(res.data.message)
         setAccountNumber('')
@@ -63,22 +66,21 @@ const Index = () => {
   const getAccountDetails = async () => {
     try {
       const uniqueId = await user.uniqueId
-      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/getAccountDetails', uniqueId)
+      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/getAccountDetails', { uniqueId })
       if (res.data.success) {
         setAccountDetails(res.data.data)
-        console.log(res.data.data)
       } else {
-        message.error('Error Fetching Account Details')
+        message.error('No Account Details Found')
+        window.location.reload()
       }
     } catch (error) {
-      message.error('Error in getting account details')
       console.log(error)
     }
   }
 
   useEffect(() => {
     if (!accountDetails.length) {
-      getAccountDetails();
+      getAccountDetails()
     }
   }, [accountDetails])
 
@@ -166,27 +168,31 @@ const Index = () => {
                 <Table responsive>
                   <thead>
                     <tr>
-                      <th>SN</th>
-                      <th>Account Name</th>
-                      <th>Account No </th>
-                      <th>IFSC Code</th>
-                      <th>Bank Name</th>
-                      <th className="text-center">Action</th>
+                      <th className="text-center">SN</th>
+                      <th className="text-center">Account Name</th>
+                      <th className="text-center">Account No </th>
+                      <th className="text-center">IFSC Code</th>
+                      <th className="text-center">Bank Name</th>
+                      <th className="text-center" colSpan={2}>
+                        Action
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {accountDetails &&
                       accountDetails.map((account, index) => (
                         <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{account.accountHolderName}</td>
-                          <td>{account.accountNumber}</td>
-                          <td>{account.ifscCode}</td>
-                          <td>{account.bankName}</td>
-                          <td className="d-flex">
+                          <td className="text-center">{index + 1}</td>
+                          <td className="text-center">{account.accountHolderName}</td>
+                          <td className="text-center">{account.accountNumber}</td>
+                          <td className="text-center">{account.ifscCode}</td>
+                          <td className="text-center">{account.bankName}</td>
+                          <td className="text-center d-flex justify-content">
                             <Button size="sm w-100 mb-2 btn-info me-2">
                               <CIcon icon={cilPen} className="nav-icon" />
                             </Button>
+                          </td>
+                          <td className='text-center'>
                             <Button size="sm w-100 mb-2 btn-danger me-2">
                               <CIcon icon={cilDelete} className="nav-icon" />
                             </Button>

@@ -23,9 +23,12 @@ const AppSidebar = () => {
       position="fixed"
       className="w-20  custom-scrollbar-container"
       visible={sidebarVisible}
+      style={{
+        backgroundColor: '#0e1726',
+      }}
     >
       <CSidebarBrand
-        className="d-none d-md-flex"
+        className="d-flex"
         style={{
           height: '5rem',
         }}

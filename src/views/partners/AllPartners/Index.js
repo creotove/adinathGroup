@@ -105,9 +105,8 @@ const Index = () => {
                     <CTableDataCell className="text-center">{item.city}</CTableDataCell>
                     <CTableDataCell className="text-center">{item.createdBy}</CTableDataCell>
                     <CTableDataCell className="text-center">
-                      <CBadge color="warning" shape="rounded-pill">
-                        {item.status === 'Pending' ? 'Approved' : 'Pending'}
-                      </CBadge>
+                      
+                        {item.status === 'pending' ? <CBadge color="warning" shape="rounded-pill">Pending</CBadge> : <CBadge color="success" shape="rounded-pill">Approved</CBadge>} 
                     </CTableDataCell>
                   </CTableRow>
                 ))

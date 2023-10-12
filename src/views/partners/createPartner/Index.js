@@ -46,6 +46,8 @@ const Index = () => {
 
   const dispatch = useDispatch()
 
+  const [fetching, setFetching] = useState(false)
+
   const handleNameUnique = (e) => {
     const lastSixDigit = mobileNumber.slice(-6)
     setUniqueId(`ADI-${lastSixDigit}`)
@@ -80,7 +82,10 @@ const Index = () => {
         createdBy: user._id,
       }
       console.log(formData)
-      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/createUser', formData)
+      const res = await axios.post(
+        'https://adinathserver.onrender.com/api/v1/user/createUser',
+        formData,
+      )
       if (res.data.success) {
         setname('')
         setMobileNumber('')
@@ -109,7 +114,10 @@ const Index = () => {
     try {
       if (user) {
         const uniqueId = user.uniqueId // Assuming user has a uniqueId property
-        const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/getAllPartnersCreatedByUser', { uniqueId })
+        const res = await axios.post(
+          'https://adinathserver.onrender.com/api/v1/user/getAllPartnersCreatedByUser',
+          { uniqueId },
+        )
         if (res.data.success) {
           if (!res.data.data || res.data.data.length === 0) {
             message.info('No Partners Found')
@@ -192,7 +200,57 @@ const Index = () => {
                     controlId="formRole"
                   >
                     <Form.Label>Role</Form.Label>
-                    <Form.Select
+                    {user && user.role === 'Admin' ? (
+                      <Form.Select
+                        onChange={(e) => {
+                          setRole(e.target.value)
+                          console.log(e.target.value)
+                        }}
+                        defaultValue={'Retailer'}
+                        value={role}
+                        required
+                      >
+                        <option value="Select Role" disabled>
+                          Select Role
+                        </option>
+                        <option value="Master Distributor">Master Distributor</option>
+                        <option value="Distributor">Distributor</option>
+                        <option value="Retailer">Retailer</option>
+                      </Form.Select>
+                    ) : user && user.role === 'Master Distributor' ? (
+                      <Form.Select
+                        onChange={(e) => {
+                          setRole(e.target.value)
+                          console.log(e.target.value)
+                        }}
+                        defaultValue={'Retailer'}
+                        value={role}
+                        required
+                      >
+                        <option value="Select Role" disabled>
+                          Select Role
+                        </option>
+                        <option value="Distributor">Distributor</option>
+                        <option value="Retailer">Retailer</option>
+                      </Form.Select>
+                    ) : user && user.role === 'Distributor' ? (
+                      <Form.Select
+                        onChange={(e) => {
+                          setRole(e.target.value)
+                          console.log(e.target.value)
+                        }}
+                        defaultValue={'Retailer'}
+                        value={role}
+                        required
+                      >
+                        <option value="Select Role" disabled>
+                          Select Role
+                        </option>
+                        <option value="Retailer">Retailer</option>
+                      </Form.Select>
+                    ) : null}
+
+                    {/* <Form.Select
                       onChange={(e) => {
                         setRole(e.target.value)
                         console.log(e.target.value)
@@ -204,12 +262,14 @@ const Index = () => {
                       <option value="Select Role" disabled>
                         Select Role
                       </option>
-                      <option value="Master Admin">Master Admin</option>
+                      {user && user.role === 'Admin' ? (
+                        <option value="Master Distributor">Master Distributor</option>
+                      ) : null}
                       <option value="Admin">Admin</option>
                       <option value="Master Distributor">Master Distributor</option>
                       <option value="Distributor">Distributor</option>
                       <option value="Retailer">Retailer</option>
-                    </Form.Select>
+                    </Form.Select> */}
                   </Form.Group>
                 </Row>
 
@@ -348,7 +408,7 @@ const Index = () => {
                   </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                <Form.Group
+                  <Form.Group
                     as={Col}
                     className="col-sm-12 col-lg-4 col-xs-12 col-md-4 col-12"
                     controlId="formPassword"
@@ -456,16 +516,31 @@ const Index = () => {
                       <CTableDataCell className="text-center">{item.city}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.createdBy}</CTableDataCell>
                       <CTableDataCell className="text-center">
-                        <CBadge color="warning" shape="rounded-pill">
-                          {item.status ==="Pending" ?"Approved" : "Pending" }
-                        </CBadge>
+                        {item.status === 'pending' ? (
+                          <CBadge color="warning" shape="rounded-pill">
+                            Pending
+                          </CBadge>
+                        ) : (
+                          <CBadge color="success" shape="rounded-pill">
+                            Approved
+                          </CBadge>
+                        )}
                       </CTableDataCell>
                     </CTableRow>
                   ))
                 ) : (
                   <CTableRow v-for="item in tableItems">
                     <CTableDataCell className="text-center" colSpan={9}>
-                      <h4 className="text-center text-danger">No partners Found</h4>
+                    {
+                      fetching ? (
+                        <div className="d-flex justify-content-center align-items-center">
+                          <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </div>
+                        </div>
+                      ) : <h4 className="text-center text-danger">No partners Found</h4>
+                    }
+                      
                     </CTableDataCell>
                   </CTableRow>
                 )}

@@ -1,98 +1,96 @@
-import { CBadge } from '@coreui/react'
-import { message } from 'antd'
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import { Button, Card, CardBody, Col, Container, Form, Row, Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { CBadge } from '@coreui/react';
+import { message } from 'antd';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, CardBody, Col, Container, Form, Row, Table } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  const user = useSelector((state) => state.user.user)
-  const [accountDetails, setAccountDetails] = useState([])
-  const [bankName, setBankName] = useState([])
-  const [withDrawBankName, setWithDrawBankName] = useState('')
-  const [amount, setAmount] = useState('')
-  const [withdrawalHistory, setWithdrawalHistory] = useState([])
-  const navigate = useNavigate()
+  const user = useSelector((state) => state.user.user);
+  const [accountDetails, setAccountDetails] = useState([]);
+  const [bankName, setBankName] = useState([]);
+  const [withDrawBankName, setWithDrawBankName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [withdrawalHistory, setWithdrawalHistory] = useState([]);
+  const navigate = useNavigate();
 
-  //eslint-disable-next-line
   const getAccountDetails = async () => {
     try {
-      const uniqueId = await user.uniqueId
-      const res = await axios.post('/api/v1/user/getAccountDetails', { uniqueId })
+      const uniqueId = await user.uniqueId;
+      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/getAccountDetails', { uniqueId });
       if (res.data.success) {
-        setAccountDetails(res.data.data)
+        setAccountDetails(res.data.data);
       } else {
-        message.error('No Account Details Found')
-        window.location.reload()
+        message.error('No Account Details Found');
+        window.location.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
+
   const handleSubmit = async (e) => {
-    console.log('clicked')
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const uniqueId = await user.uniqueId
-      const res = await axios.post('/api/v1/user/requestForWithdrawal', {
+      const uniqueId = await user.uniqueId;
+      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/requestForWithdrawal', {
         uniqueId,
         bankName: withDrawBankName,
         amount,
-      })
+      });
       if (res.data.success) {
-        message.success('Withdrawal Request Sent')
+        message.success('Withdrawal Request Sent');
       } else {
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  //eslint-disable-next-line
+  };
+
   const getBankName = async () => {
     try {
-      const uniqueId = await user.uniqueId
-      const res = await axios.post('/api/v1/user/getBankName', { uniqueId })
+      const uniqueId = await user.uniqueId;
+      const res = await axios.post('https://adinathserver.onrender.com/api/v1/user/getBankName', { uniqueId });
       if (res.data.success) {
-        setWithDrawBankName(res.data.data[0].bankName + ' ' + res.data.data[0].ifscCode)
-        setBankName(res.data.data)
+        setWithDrawBankName(res.data.data[0].bankName + ' ' + res.data.data[0].ifscCode);
+        setBankName(res.data.data);
       } else {
-        message.error('No Account Details Found')
-        window.location.reload()
+        message.error('No Account Details Found');
+        window.location.reload();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  //eslint-disable-next-line
+  };
+
   const getWithdrawalHistory = async () => {
     try {
-      const uniqueId = await user.uniqueId
-      const res = await axios.get('/api/v1/user/getWithdrawalHistory', { uniqueId })
+      const uniqueId = await user.uniqueId;
+      const res = await axios.get('https://adinathserver.onrender.com/api/v1/user/getWithdrawalHistory', { uniqueId });
       if (res.data.success) {
-        setWithdrawalHistory(res.data.data)
+        setWithdrawalHistory(res.data.data);
       } else {
-        message.error('No Account Details Found')
-        setWithdrawalHistory([])
-        window.location.reload()
+        message.error('No Withdrawal History Found');
+        setWithdrawalHistory([]);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
-    if (!accountDetails.length) {
-      getAccountDetails()
+    if (accountDetails.length === 0) {
+      getAccountDetails();
     }
-    if (!bankName.length) {
-      getBankName()
+    if (bankName.length === 0) {
+      getBankName();
     }
-    if (!getWithdrawalHistory.length) {
-      getWithdrawalHistory()
+    if (withdrawalHistory.length === 0) {
+      getWithdrawalHistory();
     }
-  }, [accountDetails, getAccountDetails, bankName, getBankName, getWithdrawalHistory])
+  }, [accountDetails, bankName, withdrawalHistory]);
   return (
     <>
       <Container fluid>

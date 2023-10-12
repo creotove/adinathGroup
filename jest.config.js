@@ -15,3 +15,4 @@ module.exports = {
     '!src/polyfill.js',
   ],
 }
+  

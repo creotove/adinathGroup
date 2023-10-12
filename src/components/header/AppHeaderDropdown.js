@@ -60,12 +60,10 @@
 
 // export default AppHeaderDropdown
 
-
 // // Add prop validation
 // AppHeaderDropdown.propTypes = {
 //   clicked: PropTypes.func.isRequired, // Assuming it's a function
 // };
-
 
 import React from 'react'
 import {
@@ -78,14 +76,11 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
-import {
-  cilWallet,
-  cilAccountLogout,
-} from '@coreui/icons'
+import { cilWallet, cilAccountLogout, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSlice } from '../../features/userSlice'
@@ -95,21 +90,47 @@ const AppHeaderDropdown = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user)
   return (
-    
-    <CDropdown variant="nav-item" style={{
-      zIndex: 1000
-    }}>
+    <CDropdown
+      variant="nav-item"
+      style={{
+        zIndex: 1000,
+      }}
+    >
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
         <CAvatar src={avatar8} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilWallet} className="me-2" />
-          Wallet
-          <CBadge color="info" className="ms-2">
-            {user ? user.wallet : 0}
-          </CBadge>
+        <CDropdownItem>
+          <Link
+            to="/profile"
+            style={{
+              textDecoration: 'none',
+              color: 'black',
+            }}
+          >
+            <CIcon icon={cilUser} className="me-2" />
+            Profile
+            <CBadge color="info" className="ms-2">
+              {user ? user.wallet : 0}
+            </CBadge>
+          </Link>
+        </CDropdownItem>
+        
+        <CDropdownItem>
+          <Link
+            to="/wallet-withdrawal"
+            style={{
+              textDecoration: 'none',
+              color: 'black',
+            }}
+          >
+            <CIcon icon={cilWallet} className="me-2" />
+            Wallet
+            <CBadge color="info" className="ms-2">
+              {user ? user.wallet : 0}
+            </CBadge>
+          </Link>
         </CDropdownItem>
         <CDropdownItem>
           <Button
