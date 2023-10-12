@@ -1,3 +1,4 @@
 node_modules
 .env
 # npm install --save-dev @babel/plugin-proposal-private-property-in-object
+#   "proxy": "http://localhost:8080/",
