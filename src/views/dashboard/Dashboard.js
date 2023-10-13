@@ -23,7 +23,7 @@ const Dashboard = () => {
   
   const getAllUsers = async () => {
     try {
-      const res = await axios.get('/api/v1/admin/allUser')
+      const res = await axios.get('https://adinathserver.onrender.com/api/v1/admin/allUser')
       if (res.data.success) {
         const { data } = res.data
         setUsers(data)

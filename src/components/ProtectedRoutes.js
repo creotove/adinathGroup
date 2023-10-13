@@ -15,7 +15,7 @@ const ProtectedRoutes = ({ children }) => {
     try {
       const res = await axios.post(
         // 'https://adinathserver.onrender.com/api/v1/user/getUserData',
-        '/api/v1/user/getUserData',
+        'https://adinathserver.onrender.com/api/v1/user/getUserData',
         { token: localStorage.getItem('token') },
         {
           headers: {
