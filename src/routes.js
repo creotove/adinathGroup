@@ -1,9 +1,5 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-
-// const Login = React.lazy(() => import('./views/pages/login/Login'))
-// const Register = React.lazy(() => import('./views/pages/register/Register'))
 
 
 const Allpartners = React.lazy(() => import('./views/partners/AllPartners/Index'))
@@ -26,9 +22,6 @@ const MasterAdminDashboard  = React.lazy(() => import('./views/master-admin-dash
 const Profile = React.lazy(() => import('./views/profile/Index'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
-  { path: '/user', name: 'User', element: Allpartners, exact: true },
 
   { path: '/set-price', name: 'Set Price', element: SetPrice, exact: true },
   { path: '/all-partners', name: 'Partners', element: Allpartners, exact: true },
